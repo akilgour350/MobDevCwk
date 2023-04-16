@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Kilgour_Alastair_S2221119</string>
+    <string-array name="search_by_array">
+        <item>Locality / Region</item>
+        <item>Date</item>
+    </string-array>
+</resources>
