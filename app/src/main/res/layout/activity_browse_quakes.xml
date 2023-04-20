@@ -13,11 +13,13 @@ Program: Computing
     android:background="@color/dark_grey"
     tools:context=".BrowseQuakes">
 
+    <!-- Stores all Views in one layout for ScrollView -->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
 
+        <!-- lets user type in something to search -->
         <EditText
             android:id="@+id/searchInput"
             android:layout_width="match_parent"
@@ -31,6 +33,7 @@ Program: Computing
             android:textCursorDrawable="@null"
             android:inputType="text" />
 
+        <!-- lets user select search type (date or location) -->
         <Spinner
             android:id="@+id/searchBy"
             android:layout_height="wrap_content"
@@ -40,6 +43,7 @@ Program: Computing
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp" />
 
+        <!-- search button -->
         <Button
             android:id="@+id/searchQuakes"
             android:layout_width="match_parent"
@@ -51,6 +55,7 @@ Program: Computing
             android:layout_marginTop="10dp"
             android:onClick="searchForInput" />
 
+        <!-- replaced with fragment containing search results -->
         <FrameLayout
             android:id="@+id/searchPlaceholder"
             android:layout_width="match_parent"
