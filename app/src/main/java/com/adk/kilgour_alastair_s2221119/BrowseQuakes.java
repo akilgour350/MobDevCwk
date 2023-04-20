@@ -6,6 +6,7 @@ SN: S2221119
 Program: Computer
 */
 
+// IMPORTS
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -23,25 +24,26 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+// END OF IMPORTS
 
 public class BrowseQuakes extends AppCompatActivity {
-    private ArrayList<Earthquake> earthquakes;
+    private ArrayList<Earthquake> earthquakes; // stores all earthquakes
 
-    @Override
+    @Override // overrides onCreate method in AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse_quakes);
-        getSupportActionBar().hide();
+        getSupportActionBar().hide(); // hides the actionbar
 
-        earthquakes = new ArrayList<>();
-        Intent intent = getIntent();
-        earthquakes = (ArrayList<Earthquake>) intent.getSerializableExtra("allQuakes");
+        earthquakes = new ArrayList<>(); // initialises earthquake arraylist
+        Intent intent = getIntent(); // gets the activity's intent
+        earthquakes = (ArrayList<Earthquake>) intent.getSerializableExtra("allQuakes"); // retrieves arraylist of passed earthquakes
 
-        ArrayList<ResultQuake> resultQuakes = new ArrayList<>();
-        for (int i = 0; i < earthquakes.size(); i++) {
-            resultQuakes.add(new ResultQuake(earthquakes.get(i), Resemblance.Exact));
+        ArrayList<ResultQuake> resultQuakes = new ArrayList<>(); // creates arraylist of resultQuakes
+        for (int i = 0; i < earthquakes.size(); i++) { // loops through all quakes and adds to a ResultQuake
+            resultQuakes.add(new ResultQuake(earthquakes.get(i), Resemblance.Exact)); // sets resemblance to exact for the sorting algorithm
         }
-        showSearchResults(resultQuakes);
+        showSearchResults(resultQuakes); // displays the search results in the table
 
         initInterface();
     }
@@ -54,6 +56,7 @@ public class BrowseQuakes extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spn.setAdapter(adapter);
 
+        // allows user to click ENTER to search for input instead of having to close the keyboard
         EditText et = findViewById(R.id.searchInput);
         et.setOnEditorActionListener((v, actionId, event) -> {
             if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
@@ -63,21 +66,23 @@ public class BrowseQuakes extends AppCompatActivity {
         });
     }
 
+    // sends data to fragment that holds results
     public void showSearchResults(ArrayList<ResultQuake> results) {
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("resultQuakes", results);
-        SearchFragment sFrag = new SearchFragment();
-        sFrag.setArguments(bundle);
+        bundle.putParcelableArrayList("resultQuakes", results); // adds arraylist of ResultQuakes to the new fragment
+        SearchFragment sFrag = new SearchFragment(); // initialises fragment
+        sFrag.setArguments(bundle); // adds bundle of data to fragment
 
+        // shows the fragment
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.searchPlaceholder, sFrag);
         ft.commit();
     }
 
     public void searchForInput(View v) {
-        ArrayList<ResultQuake> results = new ArrayList<>();
-        EditText input = findViewById(R.id.searchInput);
-        String toSearch = input.getText().toString().toLowerCase();
+        ArrayList<ResultQuake> results = new ArrayList<>(); // creates arraylist of result quakes
+        EditText input = findViewById(R.id.searchInput); // find EditText object
+        String toSearch = input.getText().toString().toLowerCase(); // retrieve search criteria from EditText
 
         if (toSearch != "" && toSearch != null) {
             Spinner spn = findViewById(R.id.searchBy);
